@@ -2,20 +2,21 @@
 let sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database(':memory:'); // database will be stored in RAM only
 
+//creates db table
 db.serialize(function () {
     db.run("CREATE TABLE IF NOT EXISTS phone_book (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, last_name TEXT, phone TEXT)");
 });
 
-// define api object
+//initial app setup
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const app = express();
-app.use(cors);
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// define API endpoints
+//API endpoints
 
 //get contact by ID
 app.get('/api:id', (req, res) => {
@@ -60,6 +61,7 @@ app.post('/api/add_contact', function (req, res) {
                 return console.error(err.message);
             } else {
                 console.log(`Rows inserted`);
+                res.send('Success');
             }
         }
     );
@@ -74,8 +76,10 @@ app.delete('/api/delete_contact', function (req, res) {
     db.run(`DELETE FROM phone_book WHERE id=?`, req.body.id, function (err) {
         if (err) {
             return console.error(err.message);
+        } else {
+            console.log(`Row(s) deleted ${this.changes}`);
+            res.send('Success');
         }
-        console.log(`Row(s) deleted ${this.changes}`);
     });
 
 
