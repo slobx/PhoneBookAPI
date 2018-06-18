@@ -33,7 +33,7 @@ app.get('/api:id', (req, res) => {
 
 //get all contacts
 app.get('/api/contacts_list', (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Origin", "https://phonebook-slobx.herokuapp.com");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     db.all("SELECT * FROM phone_book", function (err, row) {
         if (row) {
@@ -46,7 +46,7 @@ app.get('/api/contacts_list', (req, res) => {
 
 //save contact
 app.post('/api/add_contact', function (req, res) {
-    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Origin", "https://phonebook-slobx.herokuapp.com");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     let sql = 'INSERT INTO phone_book (name, last_name, phone) VALUES (?, ?, ?)';
     let data = [
@@ -69,7 +69,7 @@ app.post('/api/add_contact', function (req, res) {
 
 //delete contact
 app.delete('/api/delete_contact', function (req, res) {
-    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Origin", "https://phonebook-slobx.herokuapp.com");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     console.log(req.body);
 
